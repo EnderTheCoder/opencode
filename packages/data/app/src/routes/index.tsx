@@ -151,7 +151,14 @@ export default function StatsHome() {
                   leaderboard={stats().leaderboard}
                   catalogLabs={stats().catalogLabs}
                 />
-                <NewModelsSection data={stats().newModels} catalogLabs={stats().catalogLabs} />
+                <NewModelsSection
+                  data={stats().newModels}
+                  catalogLabs={stats().catalogLabs}
+                  colorFor={(model) =>
+                    usageColors.at(getTopModelsSegmentOrder(stats().usage.daily).get(model) ?? usageColors.length) ??
+                    "var(--stats-accent)"
+                  }
+                />
                 <UniqueUsersSection data={stats().users} />
                 <RetentionSection data={stats().retention} />
                 <SessionCostSection data={stats().sessionCost} />
