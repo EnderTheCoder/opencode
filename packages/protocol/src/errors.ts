@@ -378,3 +378,9 @@ export class MachineNotFoundError extends Schema.TaggedError<MachineNotFoundErro
   },
   { httpApiStatus: 404 },
 ) {}
+
+export class PushNotFoundError extends Schema.TaggedError<PushNotFoundError>()(
+  "PushNotFoundError",
+  { message: Schema.String },
+  { httpApiStatus: 404 },
+) {}
