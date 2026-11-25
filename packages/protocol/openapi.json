@@ -14193,11 +14193,18 @@
         "security": [],
         "responses": {
           "200": {
-            "description": "Push.Info",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Push.Info"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Push.Info"
+                    }
+                  },
+                  "required": ["data"],
+                  "additionalProperties": false
                 }
               }
             }
@@ -14222,18 +14229,18 @@
               }
             }
           },
-          "404": {
-            "description": "PushNotFoundError",
+          "403": {
+            "description": "ForbiddenError",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PushNotFoundErrorEncoded"
+                  "$ref": "#/components/schemas/ForbiddenErrorEncoded"
                 }
               }
             }
           }
         },
-        "description": "List the registered phones with their choices, bells and pauses, the server-wide pause and the shared session bells. Never returns callback URLs or keys. Behind the push flag. Experimental: may change without compatibility guarantees.",
+        "description": "List the registered phones with their choices, bells and pauses, the server-wide pause, the shared session bells and the relays a phone may register with. Never returns callback URLs or keys. Behind the push flag. Experimental: may change without compatibility guarantees.",
         "summary": "Get push settings"
       }
     },
@@ -14254,11 +14261,18 @@
         "security": [],
         "responses": {
           "200": {
-            "description": "Push.Registered",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Push.Registered"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Push.Registered"
+                    }
+                  },
+                  "required": ["data"],
+                  "additionalProperties": false
                 }
               }
             }
@@ -14283,18 +14297,18 @@
               }
             }
           },
-          "404": {
-            "description": "PushNotFoundError",
+          "403": {
+            "description": "ForbiddenError",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PushNotFoundErrorEncoded"
+                  "$ref": "#/components/schemas/ForbiddenErrorEncoded"
                 }
               }
             }
           }
         },
-        "description": "Register or renew a phone's relay callback URL and public key, and answer with the server's public key for it. Keeps the phone's pause and session bells. Behind the push flag. Experimental: may change without compatibility guarantees.",
+        "description": "Register or renew a phone's relay callback URL and public key, and answer with the server's public key for it. Keeps the phone's pause, session bells and, unless given, its level. Behind the push flag. Experimental: may change without compatibility guarantees.",
         "summary": "Register a phone",
         "requestBody": {
           "content": {
@@ -14345,12 +14359,12 @@
               }
             }
           },
-          "404": {
-            "description": "PushNotFoundError",
+          "403": {
+            "description": "ForbiddenError",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PushNotFoundErrorEncoded"
+                  "$ref": "#/components/schemas/ForbiddenErrorEncoded"
                 }
               }
             }
@@ -14375,11 +14389,18 @@
         "security": [],
         "responses": {
           "200": {
-            "description": "Push.DevicePatch",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Push.DevicePatch"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Push.Device"
+                    }
+                  },
+                  "required": ["data"],
+                  "additionalProperties": false
                 }
               }
             }
@@ -14404,6 +14425,16 @@
               }
             }
           },
+          "403": {
+            "description": "ForbiddenError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorEncoded"
+                }
+              }
+            }
+          },
           "404": {
             "description": "PushNotFoundError",
             "content": {
@@ -14415,8 +14446,8 @@
             }
           }
         },
-        "description": "Pause or resume notifications to one phone. Behind the push flag. Experimental: may change without compatibility guarantees.",
-        "summary": "Pause a phone",
+        "description": "Pause or resume notifications to one phone, or change the level it gets by default. Behind the push flag. Experimental: may change without compatibility guarantees.",
+        "summary": "Update a phone",
         "requestBody": {
           "content": {
             "application/json": {
@@ -14454,11 +14485,18 @@
         "security": [],
         "responses": {
           "200": {
-            "description": "Push.Bell",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Push.Bell"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Push.Bell"
+                    }
+                  },
+                  "required": ["data"],
+                  "additionalProperties": false
                 }
               }
             }
@@ -14479,6 +14517,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnauthorizedErrorEncoded"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "ForbiddenError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorEncoded"
                 }
               }
             }
@@ -14553,6 +14601,16 @@
               }
             }
           },
+          "403": {
+            "description": "ForbiddenError",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForbiddenErrorEncoded"
+                }
+              }
+            }
+          },
           "404": {
             "description": "PushNotFoundError",
             "content": {
@@ -14585,11 +14643,18 @@
         "security": [],
         "responses": {
           "200": {
-            "description": "Push.Bell",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Push.Bell"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Push.Bell"
+                    }
+                  },
+                  "required": ["data"],
+                  "additionalProperties": false
                 }
               }
             }
@@ -14614,12 +14679,12 @@
               }
             }
           },
-          "404": {
-            "description": "PushNotFoundError",
+          "403": {
+            "description": "ForbiddenError",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PushNotFoundErrorEncoded"
+                  "$ref": "#/components/schemas/ForbiddenErrorEncoded"
                 }
               }
             }
@@ -14676,12 +14741,12 @@
               }
             }
           },
-          "404": {
-            "description": "PushNotFoundError",
+          "403": {
+            "description": "ForbiddenError",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PushNotFoundErrorEncoded"
+                  "$ref": "#/components/schemas/ForbiddenErrorEncoded"
                 }
               }
             }
@@ -14692,56 +14757,6 @@
       }
     },
     "/api/experimental/push/settings": {
-      "get": {
-        "tags": ["experimental"],
-        "operationId": "experimental.push.settings.get",
-        "parameters": [],
-        "security": [],
-        "responses": {
-          "200": {
-            "description": "Push.Settings",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Push.Settings"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "InvalidRequestError",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InvalidRequestErrorEncoded"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "UnauthorizedError",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedErrorEncoded"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "PushNotFoundError",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PushNotFoundErrorEncoded"
-                }
-              }
-            }
-          }
-        },
-        "description": "Read whether all notifications are paused. Behind the push flag. Experimental: may change without compatibility guarantees.",
-        "summary": "Get the push pause"
-      },
       "put": {
         "tags": ["experimental"],
         "operationId": "experimental.push.settings.set",
@@ -14749,11 +14764,18 @@
         "security": [],
         "responses": {
           "200": {
-            "description": "Push.Settings",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Push.Settings"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Push.Settings"
+                    }
+                  },
+                  "required": ["data"],
+                  "additionalProperties": false
                 }
               }
             }
@@ -14778,12 +14800,12 @@
               }
             }
           },
-          "404": {
-            "description": "PushNotFoundError",
+          "403": {
+            "description": "ForbiddenError",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PushNotFoundErrorEncoded"
+                  "$ref": "#/components/schemas/ForbiddenErrorEncoded"
                 }
               }
             }
@@ -18430,18 +18452,6 @@
               }
             ]
           },
-          "push": {
-            "type": "object",
-            "properties": {
-              "relays": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            },
-            "additionalProperties": false
-          },
           "plugins": {
             "type": "array",
             "items": {
@@ -18623,6 +18633,12 @@
                     "enum": [false]
                   }
                 ]
+              },
+              "push_relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "policies": {
                 "type": "array",
@@ -24516,29 +24532,6 @@
         "required": ["level"],
         "additionalProperties": false
       },
-      "Push.Capability": {
-        "type": "object",
-        "properties": {
-          "version": {
-            "type": "number",
-            "enum": [1]
-          },
-          "relays": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "levels": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Push.Level"
-            }
-          }
-        },
-        "required": ["version", "relays", "levels"],
-        "additionalProperties": false
-      },
       "Push.Device": {
         "type": "object",
         "properties": {
@@ -24601,9 +24594,11 @@
         "properties": {
           "paused": {
             "type": "boolean"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/Push.DeviceSettings"
           }
         },
-        "required": ["paused"],
         "additionalProperties": false
       },
       "Push.DeviceSettings": {
@@ -24633,9 +24628,16 @@
             "additionalProperties": {
               "$ref": "#/components/schemas/Push.Bell"
             }
+          },
+          "relays": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Relay origins a phone's callback URL may be on"
           }
         },
-        "required": ["settings", "devices", "sessions"],
+        "required": ["settings", "devices", "sessions", "relays"],
         "additionalProperties": false
       },
       "Push.Level": {
@@ -24707,11 +24709,14 @@
             "type": "string",
             "enum": ["PushNotFoundError"]
           },
+          "deviceID": {
+            "type": "string"
+          },
           "message": {
             "type": "string"
           }
         },
-        "required": ["_tag", "message"],
+        "required": ["_tag", "deviceID", "message"],
         "additionalProperties": false
       },
       "Reference.GitSource": {
@@ -24891,16 +24896,6 @@
                     "anyOf": [
                       {
                         "type": "boolean"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "push": {
-                    "anyOf": [
-                      {
-                        "$ref": "#/components/schemas/Push.Capability"
                       },
                       {
                         "type": "null"
