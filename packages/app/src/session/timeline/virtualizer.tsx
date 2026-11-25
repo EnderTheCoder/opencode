@@ -123,7 +123,8 @@ type Input = {
   setVisibleRef?: (element: HTMLDivElement | undefined) => void
   onScheduleScrollState: (element: HTMLDivElement) => void
   onUserScroll: (target?: EventTarget | null) => void
-  onHistoryScroll: () => void
+  /** A scroll event, with how far the reader moved the offset in it (negative toward the top). */
+  onHistoryScroll: (reader: number) => void
   /** The reader gave upward input: a wheel, a key or a page from the composer. */
   onHistoryIntent?: () => void
   canRenderImmediately?: (
@@ -1183,7 +1184,7 @@ export function createTimelineVirtualizer(input: Input) {
     input.follow.dispatch(scrollEvent)
     dispatchCold(CHECK_REQUESTED)
     input.onScheduleScrollState(root)
-    input.onHistoryScroll()
+    input.onHistoryScroll(scrollEvent.reader)
   }
 
   function View(props: ViewProps) {

@@ -89,7 +89,7 @@ type MessageTimelineProps = {
   onScheduleScrollState: (el: HTMLDivElement) => void
   follow: TimelineFollow
   onUserScroll: (target?: EventTarget | null) => void
-  onHistoryScroll: () => void
+  onHistoryScroll: (reader: number) => void
   onHistoryIntent?: () => void
   centered: boolean
   reserveReviewToggle: boolean

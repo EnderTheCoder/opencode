@@ -331,16 +331,20 @@ describe("history machine", () => {
     expect(sizes(transitionTimelineHistory(rested.state, SEEK_REQUESTED_EVENT).effects)).toEqual([20])
   })
 
-  test.each<{ name: string; top: number; previousTop: number; viewport: number; loads: boolean }>([
-    { name: "any scroll at the top", top: 150, previousTop: 100, viewport: 800, loads: true },
-    { name: "a scroll toward the top with less than the runway above", top: 2000, previousTop: 2100, viewport: 800, loads: true },
-    // A page that lands moves the offset this way. Counting it kept paging until the runway was full.
-    { name: "a scroll away from the top", top: 2000, previousTop: 1900, viewport: 800, loads: false },
-    { name: "a scroll toward the top with the runway above", top: 2500, previousTop: 2600, viewport: 800, loads: false },
+  // `reader` is how far the reader moved the offset in the scroll event, negative toward the top.
+  test.each<{ name: string; top: number; reader: number; viewport: number; loads: boolean }>([
+    { name: "any scroll at the top", top: 150, reader: 0, viewport: 800, loads: true },
+    { name: "the reader moving toward the top with less than the runway above", top: 2000, reader: -100, viewport: 800, loads: true },
+    { name: "the reader moving away from the top", top: 2000, reader: 100, viewport: 800, loads: false },
+    // A page that lands, and a correction for rows the timeline measured, move the offset without the reader. A
+    // correction that lowered it while a page loaded counted as the reader still coming: one wheel step then loaded
+    // two pages, the second of twice the size.
+    { name: "a scroll the reader did not make, inside the runway", top: 2000, reader: 0, viewport: 800, loads: false },
+    { name: "the reader moving toward the top with the runway above", top: 2500, reader: -100, viewport: 800, loads: false },
     // A page key moves a screen at a time, so a tall window keeps two screens.
-    { name: "a scroll toward the top with less than two screens above", top: 2500, previousTop: 2600, viewport: 1600, loads: true },
+    { name: "the reader moving toward the top with less than two screens above", top: 2500, reader: -100, viewport: 1600, loads: true },
   ])("$name asks for a page: $loads", (input) => {
-    expect(scrollLoadsHistory(input.top, input.previousTop, input.viewport)).toBe(input.loads)
+    expect(scrollLoadsHistory(input.top, input.reader, input.viewport)).toBe(input.loads)
   })
 
   test("a following view probes the fill again after a prepend", () => {

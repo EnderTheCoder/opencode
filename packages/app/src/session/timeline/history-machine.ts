@@ -220,13 +220,15 @@ export function historyRunway(viewportHeight: number) {
 }
 
 /**
- * Whether a detached reader's scroll asks for the next older page: any scroll at the top, and one toward the top with
- * less than the runway above the view, so the page lands before the reader gets there. Inside the runway only a
- * scroll toward the top counts. A page that lands pushes the offset the other way, and rows can be far shorter than
- * the messages they hold, so paging until the runway is full could load a whole session unasked.
+ * Whether a detached reader's scroll asks for the next older page: any scroll at the top, and one in which the
+ * reader moved toward the top with less than the runway above the view, so the page lands before the reader gets
+ * there. `reader` is how far the reader moved the offset in this scroll event, negative toward the top. The
+ * timeline's own writes count 0: a page that lands, and a correction for rows it measured, are not the reader
+ * asking. Rows can be far shorter than the messages they hold, so paging until the runway is full could load a whole
+ * session unasked.
  */
-export function scrollLoadsHistory(top: number, previousTop: number, viewportHeight: number) {
-  return top < HISTORY_SCROLL_THRESHOLD || (top < previousTop && top < historyRunway(viewportHeight))
+export function scrollLoadsHistory(top: number, reader: number, viewportHeight: number) {
+  return top < HISTORY_SCROLL_THRESHOLD || (reader < 0 && top < historyRunway(viewportHeight))
 }
 
 /** A scroll that asks for a page may request it, or tell a page that is loading that the reader is still coming. */
